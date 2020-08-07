@@ -365,11 +365,13 @@
             }
             url = redirectUrl;
             if (response.headers.get('set-cookie'){
-              headers.set('cookie', 
-                response.headers.get("set-cookie")
+                header.set('cookie', response.headers.get("set-cookie")
                   .split(", ")
                   .map(setCookie => setCookie.substring(0, setCookie.indexOf(';')))
                   .filter(setCookie => setCookie.indexOf('=') !== -1)
+                  .map(setCookie => setCookie.split('=')
+                     .map(c => encodeURIComponent(c))
+                     .join('='))
                   .join("; "))
             }
             redirected = true;
