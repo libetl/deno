@@ -364,6 +364,14 @@
               redirectUrl = new URL(redirectUrl, url).href;
             }
             url = redirectUrl;
+            if (response.headers.get('set-cookie'){
+              headers.set('cookie', 
+                response.headers.get("set-cookie")
+                  .split(", ")
+                  .map(setCookie => setCookie.substring(0, setCookie.indexOf(';')))
+                  .filter(setCookie => setCookie.indexOf('=') !== -1)
+                  .join("; "))
+            }
             redirected = true;
             remRedirectCount--;
         }
